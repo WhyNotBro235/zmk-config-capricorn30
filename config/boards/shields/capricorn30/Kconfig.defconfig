@@ -1,0 +1,6 @@
+if SHIELD_CAPRICORN30
+
+config ZMK_KEYBOARD_NAME
+    default "Capricorn30"
+
+endif

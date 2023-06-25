@@ -1,0 +1,83 @@
+/*
+ * Copyright (c) 2022 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+#define DEF_L 0
+#define NUM_L 1
+#define PUN_L 2
+#define NAV_L 3
+#define FUN_L 4
+
+// Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
+&lt { quick_tap_ms = <160>; };
+
+/ {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "homerow mods";
+            #binding-cells = <2>;
+            tapping_term_ms = <160>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+                            &kp L       &kp G        &kp D           &kp V            &kp Z        &kp F          &kp Y        &kp P
+                &hm LGUI O  &hm LALT R  &hm LCTRL T  &hm LSHFT H                                   &hm RSHFT S    &hm RCTRL I  &hm RALT N  &hm RGUI A
+                &kp QUOT    &kp J       &kp C        &kp M           &kp K            &kp Q        &kp W          &kp X        &kp B       &kp U
+                                                     &lt NAV_L BKSP  &lt NUM_L SPACE  &lt PUN_L E  &lt FUN_L RET
+            >;
+        };
+
+        numpad_layer {
+            label = "NUM";
+            bindings = <
+                           &kp N1  &kp N2  &kp N3   &kp COMMA  &none   &none            &none         &none
+                &kp MINUS  &kp N4  &kp N5  &kp N6                      &hm RSHFT PRCNT  &hm RCTRL AT  &hm RALT HASH  &hm RGUI DLLR
+                &kp N0     &kp N7  &kp N8  &kp N9   &kp DOT    &none   &none            &none         &none          &none
+                                           &none    &trans     &none   &kp ESC
+            >;
+        };
+
+        punctuation_layer {
+            label = "PUN";
+            bindings = <
+                                &kp AMPS       &kp QMARK        &kp EXCL       &kp LT   &kp LBRC  &kp GRAVE       &kp PIPE        &kp BSLH
+                &hm LGUI MINUS  &hm LALT FSLH  &hm LCTRL COMMA  &hm LSHFT DOT                     &hm RSHFT LPAR  &hm RCTRL LBKT  &hm RALT ASTRK  &hm RGUI PLUS
+                &kp TILDE       &kp UNDER      &kp SEMI         &kp COLON      &kp GT   &kp RBRC  &kp RPAR        &kp RBKT        &kp CARET       &kp EQUAL
+                                                                &kp DEL        &kp TAB  &trans    &none
+            >;
+        };
+
+        navigation_layer {
+            label = "NAV";
+            bindings = <
+                            &none       &kp UP    &none       &kp C_VOL_UP  &kp C_BRI_UP  &none           &kp PG_UP        &none
+                &none       &kp LEFT    &kp DOWN  &kp RIGHT                               &hm RSHFT HOME  &hm RCTRL PG_DN  &hm RALT END  &kp RGUI
+                &kp C_MUTE  &kp C_PREV  &kp C_PP  &kp C_NEXT  &kp C_VOL_DN  &kp C_BRI_DN  &none           &none            &none         &none
+                                                  &trans      &none         &none         &none
+            >;
+        };
+
+        function_layer {
+            label = "FUN";
+            bindings = <
+                              &kp BT_PRV    &bt BT_CLR    &bt BT_NXT      &none         &kp F12  &kp F1  &kp F2  &kp F3
+                &kp LGUI      &kp LALT      &kp LCTRL     &hm LSHFT CAPS                         &kp F4  &kp F5  &kp F6   &kp F7
+                &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4  &kp F13  &kp F8  &kp F9  &kp F10  &kp F11
+                                                          &none           &none         &none    &trans
+            >;
+        };
+    };
+};
