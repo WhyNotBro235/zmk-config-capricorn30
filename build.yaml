@@ -13,5 +13,5 @@
 #
 ---
 include:
-  - board: seeeduino_xiao_ble
+  - board: seeeduino_xiao
     shield: Capricorn30
